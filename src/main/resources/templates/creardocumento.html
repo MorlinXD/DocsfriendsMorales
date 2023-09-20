@@ -1,0 +1,103 @@
+
+<title>TODO supply a title</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0"></meta>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous"></link>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm" crossorigin="anonymous"></script><!-- comment -->
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.min.js" integrity="sha384-Rx+T1VzGupg4BHQYs2gCW9It+akI2MM/mndMCy36UVfodzcJcF0GGLxZIzObiEfa" crossorigin="anonymous"></script>
+</head>
+<body>
+    <h4 style="color:white; margin-left:10px">Subir documento</h4>
+    <form th:action="@{/docsfriends/savedoc}" th:object="${objdocumento}" method="POST" enctype="multipart/form-data">
+        <div class="parte" style="margin: 20px ; width: 45%">
+            <div class="form-segment segment-1" >
+
+                <div class="mb-3">
+                    <label style="color:#FFC107">Titulo:</label>
+                    <input required="true" type="text" maxlength="30" class="form-control" id="exampleFormControlInput1" placeholder="Titulo de documento" th:field="*{titulo}">
+                </div>
+                <div class="mb-3">
+                    <label style="color:#FFC107">Autor:  </label>
+                    <input required="true" type="text" maxlength="30" class="form-control" id="exampleFormControlInput1" placeholder="Autor de documento" th:field="*{autor}">
+                </div>
+                <div class="mb-3">
+                    <div class="input-group mb-3">
+                        <span class="input-group-text">Sispnosis:</span>
+                        <textarea class="form-control" aria-label="With textarea" th:field="*{descripcion}"></textarea>
+                    </div>
+                </div>
+                <select name="idTipoDocumento">
+                    <option disabled th:text="Tipo" selected="Tipo"></option>
+                    <option th:each="tipox : ${listatipodoc}" th:value="${tipox.idTipoDocumento}" th:text="${tipox.nombre_tipo}" th:field="*{idTipoDocumento}"></option>
+                </select>
+
+            </div>
+        </div>
+        <div class="mb-3" style="margin: 2%;">
+            <label style="color:#FFC107">Adjuntar archivo del documento:</label><br/><br/>
+            <label class="img p">
+                
+                <label for="arch1">
+                    <img class="ptp" th:src="@{/images/subir-archivo.png}" alt="Subir archivo" style="width: 60px;">
+                        <input type="file" id="arch1" name="arch1" accept=".pdf" >
+                    </img>
+                </label>
+
+            </label>
+        </div>
+        <div class="mb-3" style="margin: 2%;">
+            <label style="color:#FFC107">Fotos del documento:</label><br/><br/>
+            <label class="img p">
+                <input type="file" name="file1" accept=".jpg, .jpeg, .png"  >
+            </label>
+            <label class="img p">
+                <input type="file" name="file2" accept=".jpg, .jpeg, .png"  >
+            </label>
+            <label class="img p">
+                <input type="file" name="file3" accept=".jpg, .jpeg, .png"  >
+            </label> 
+            <label class="img p">
+                <input type="file" name="file4" accept=".jpg, .jpeg, .png"  >
+            </label> 
+            <label class="img p">
+                <input type="file" name="file5" accept=".jpg, .jpeg, .png"  >
+            </label>
+            <label class="img p">
+                <input type="file" name="file6" accept=".jpg, .jpeg, .png"  >
+            </label>
+            <button type="Submit"  class="btn btn-outline-success" id="btonagregar" style="width: 40%">SUBIR LIBRO &#10133;</button>
+            <button type="button" onclick="cargarContenido('/docsfriends/inicio')" class="btn btn-outline-danger" style="width: 40%">Cancelar</button>
+        </div>
+    </form>
+
+
+</body>
+<style>
+
+    .p:hover {
+        cursor: pointer;
+    }
+    .img{
+        width: 50%;
+        height: auto;
+        margin: 1%;
+    }
+    .parte{
+        display: inline-block;
+    }
+    button{
+        margin: 25px;
+    }
+    .mb-3 input, select{
+        background-color: transparent;
+        color: #FFC107;
+        border-bottom-color: #FFC107;
+        border-radius: 2px;
+
+    }
+    select{
+        width: 100%;
+    }
+</style>
+</html>

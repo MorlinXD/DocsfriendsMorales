@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Agregar Documentos</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background: radial-gradient(circle, #20404F, #0D1A20);
+            background-size: cover;
+            font-family: Arial, sans-serif;
+            color: #fff;
+        }
+
+        header {
+            background-color: #333;
+            padding: 20px 0;
+            text-align: center;
+        }
+
+        header h1 {
+            font-size: 28px;
+            margin: 0;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .form-box {
+            background-color: #fff;
+            padding: 30px;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+        }
+
+        .form-box h2 {
+            font-size: 24px;
+            margin-bottom: 20px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        label {
+            font-weight: bold;
+            margin-bottom: 5px;
+            display: block;
+        }
+
+        input[type="number"],
+        input[type="file"] {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 3px;
+        }
+
+        input[type="submit"] {
+            background-color: #FFC107;
+            color: #333;
+            border: none;
+            border-radius: 3px;
+            padding: 10px 20px;
+            font-size: 18px;
+            cursor: pointer;
+            width: 100%;
+            margin-top: 10px;
+        }
+
+        input[type="submit"]:hover {
+            background-color: #FFA000;
+        }
+
+        footer {
+            background-color: #333;
+            color: #FFC107; /* Cambio de color a amarillo */
+            text-align: center;
+            padding: 10px 0;
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+        }
+
+        footer a {
+            color: #FFC107;
+            text-decoration: none;
+        }
+
+        /* Cambiar el color de algunos elementos de texto */
+        .highlight-text {
+            color: black; /* Cambio de color a amarillo */
+        }
+    </style>
+</head>
+</head>
+<body>
+    <header>
+        <h1>Agregar Documentos</h1>
+    </header>
+
+    <div class="container">
+        <div class="form-box">
+            <h2>Información de Documentos</h2>
+            <form id="uploadForm" action="/upload" method="post" enctype="multipart/form-data">
+                <div class="form-group">
+                    <label for="cantidad" class="highlight-text">Cantidad de Documentos:</label>
+                    <input type="number" id="cantidad" name="cantidad" min="1" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="files" class="highlight-text">Seleccionar Documentos (PDF):</label>
+                    <input type="file" id="files" name="files[]" accept=".pdf" multiple>
+                </div>
+
+                <div id="file-list" class="highlight-text"></div>
+                <input type="submit" value="Subir Documentos" disabled>
+            </form>
+        </div>
+    </div>
+
+    <footer>
+        <a href="/docsfriends/home">Ir a la página principal</a>
+    </footer>
+
+    <script>
+        document.getElementById('cantidad').addEventListener('input', function() {
+            var cantidad = parseInt(this.value);
+            var inputFiles = document.getElementById('files');
+            var fileCount = document.getElementById('file-list');
+
+            // Habilitar o deshabilitar el campo de selección de archivos según la cantidad ingresada
+            inputFiles.disabled = (cantidad === 0);
+
+            // Restablecer el valor del campo de selección de archivos si se deshabilita
+            if (inputFiles.disabled) {
+                inputFiles.value = '';
+                fileCount.innerHTML = '';
+            }
+        });
+
+        document.getElementById('files').addEventListener('change', function() {
+            var selectedFiles = this.files;
+            var fileCount = document.getElementById('file-list');
+            var cantidad = parseInt(document.getElementById('cantidad').value);
+
+            if (selectedFiles.length === cantidad) {
+                // Habilitar el botón de envío si se selecciona la cantidad correcta de archivos
+                document.getElementById('uploadForm').querySelector('input[type="submit"]').disabled = false;
+            } else {
+                // Deshabilitar el botón de envío si no se selecciona la cantidad correcta de archivos
+                document.getElementById('uploadForm').querySelector('input[type="submit"]').disabled = true;
+            }
+
+            // Mostrar la cantidad de archivos seleccionados
+            var fileCountText = selectedFiles.length + ' archivo(s) seleccionado(s)';
+            fileCount.innerHTML = fileCountText;
+
+            // Mostrar el nombre de los archivos seleccionados
+            var fileListText = '';
+            for (var i = 0; i < selectedFiles.length; i++) {
+                fileListText += '<br>' + selectedFiles[i].name;
+            }
+            fileCount.innerHTML += fileListText;
+        });
+    </script>
+</body>
+</html>

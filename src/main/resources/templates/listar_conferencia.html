@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Lista de Conferencias</title>
+        <style>
+            body {
+                margin: 0;
+                padding: 0;
+                font-family: Arial, sans-serif;
+                background: linear-gradient(to bottom, #20404F, #0D1A20);
+                background-size: cover;
+                color: #fff;
+            }
+
+            header {
+                background-color: #333;
+                padding: 20px 0;
+                text-align: center;
+            }
+
+            header h1 {
+                font-size: 28px;
+                color: #FFC107;
+            }
+
+            .container {
+                max-width: 800px;
+                margin: 0 auto;
+                padding: 20px;
+            }
+
+            .card {
+                background-color: #fff;
+                padding: 20px;
+                border-radius: 5px;
+                box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+                margin-bottom: 20px;
+            }
+
+            .card h2 {
+                color: #333;
+                font-size: 24px;
+                margin-bottom: 10px;
+            }
+
+            .card p {
+                margin-bottom: 10px;
+            }
+
+            .button {
+                background-color: #FFC107;
+                color: #333;
+                border: none;
+                border-radius: 3px;
+                padding: 10px 20px;
+                font-size: 18px;
+                cursor: pointer;
+                transition: background-color 0.3s;
+            }
+
+            .button:hover {
+                background-color: #FFA000;
+            }
+
+            footer {
+                background-color: #333;
+                color: #fff;
+                text-align: center;
+                padding: 10px 0;
+            }
+
+            footer a {
+                color: #FFC107;
+                text-decoration: none;
+            }
+        </style>
+    </head>
+    <body>
+        <header>
+            <h1>Lista de Conferencias</h1>
+            <a class="button" href="/docsfriends/home">Ir a la página principal</a>
+        </header>
+        <ul>
+            <!-- Utiliza Thymeleaf para iterar sobre la lista de conferencias y mostrarlas -->
+            <li th:each="conferencia : ${conferencias}">
+                <h2 th:text="${conferencia.nombre_conferencia}"></h2>
+                <p>Tema: <span th:text="${conferencia.tema}"></span></p>
+                <p>Fecha de Inicio: <span th:text="${#dates.format(conferencia.fechaInicio, 'dd-MM-yyyy')}"></span></p>
+                <p>Fecha de Fin: <span th:text="${#dates.format(conferencia.fechaFin, 'dd-MM-yyyy')}"></span></p>
+                <p>Lugar: <span th:text="${conferencia.lugar}"></span></p>
+                <p>Descripción: <span th:text="${conferencia.descripcion}"></span></p>
+                <p>Organizador: <span th:text="${conferencia.organizador}"></span></p>
+            </li>
+        </ul>
+    </body>
+</html>
